@@ -1,0 +1,9 @@
+/.idea
+*.pdf
+.env
+media/*
+node_modules
+yarn.lock
+coverage.out
+.scannerwork
+**/*swagger.*

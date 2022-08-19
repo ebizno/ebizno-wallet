@@ -1,0 +1,68 @@
+version: '3.7'
+
+services:
+  ebizno_db:
+    image: postgres:9.4
+    container_name: ebizno_database
+    tty: true
+    restart: always
+    volumes:
+      - ebizno-postgres:/var/lib/postgresql/data
+      - ./create_table.sql:/docker-entrypoint-initdb.d/create_table.sql
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    networks:
+      - ebizno
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+
+  ebizno_api:
+    container_name: ebizno_server
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - .:/go/src/
+    ports:
+      - "${PORT_PRODUCT_REST}:${PORT_PRODUCT_REST}"
+      - "${PORT_ADDRESS_REST}:${PORT_ADDRESS_REST}"
+      - "${PORT_CLIENT_REST}:${PORT_CLIENT_REST}"
+      - "${PORT_USER_REST}:${PORT_USER_REST}"
+      - "${PORT_WELLET_REST}:${PORT_WELLET_REST}"
+      - "${PORT_MERCHANT_REST}:${PORT_MERCHANT_REST}"
+      - "${PORT_PURCHASE_REST}:${PORT_PURCHASE_REST}"
+    networks:
+      - ebizno
+    depends_on:
+      - ebizno_db
+      - pgadmin
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    tty: true
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=user@eb.com
+      - PGADMIN_DEFAULT_PASSWORD=twre#321
+    ports:
+      - "9000:80"
+    depends_on:
+      - ebizno_db
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+
+networks:
+  ebizno: {}
+
+
+volumes:
+  ebizno-postgres: {}

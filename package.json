@@ -1,0 +1,39 @@
+{
+  "name": "e-bizno",
+  "version": "1.0.0",
+  "description": "**E-Bizno** _is a web application Buying and Selling Houses and Land is a system that will allow the purchase and sale of real estate in Angola, a system developed for the web with the objective of facilitating the adhesion of properties in Angola._",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@commitlint/cli": "^17.0.3"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.0.3",
+    "husky": "^8.0.1"
+  },
+  "hooks": {
+    "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ebizno/e-bizno-backend.git"
+  },
+  "keywords": [
+    "e-bizno",
+    "e",
+    "eb",
+    "ebizno"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ebizno/e-bizno-backend/issues"
+  },
+  "homepage": "https://github.com/ebizno/e-bizno-backend#readme"
+}
